@@ -1,10 +1,10 @@
 <?php
 
-namespace Ben182\LaravelLetterxpress;
+namespace Ben182\Letterxpress;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelLetterxpressServiceProvider extends ServiceProvider
+class LetterxpressServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -21,7 +21,7 @@ class LaravelLetterxpressServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('laravel-letterxpress.php'),
+                __DIR__.'/../config/config.php' => config_path('letterxpress.php'),
             ], 'config');
 
             // Publishing the views.
@@ -50,11 +50,11 @@ class LaravelLetterxpressServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-letterxpress');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'letterxpress');
 
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-letterxpress', function () {
-            return new LaravelLetterxpress;
+        $this->app->singleton('letterxpress', function () {
+            return new Letterxpress;
         });
     }
 }

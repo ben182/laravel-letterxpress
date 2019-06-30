@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
+        "guzzlehttp/guzzle": "^6.3",
         "illuminate/support": "5.8.*"
     },
     "require-dev": {
@@ -25,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Ben182\\LaravelLetterxpress\\": "src"
+            "Ben182\\Letterxpress\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ben182\\LaravelLetterxpress\\Tests\\": "tests"
+            "Ben182\\Letterxpress\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -44,10 +45,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ben182\\LaravelLetterxpress\\LaravelLetterxpressServiceProvider"
+                "Ben182\\Letterxpress\\LetterxpressServiceProvider"
             ],
             "aliases": {
-                "LaravelLetterxpress": "Ben182\\LaravelLetterxpress\\LaravelLetterxpressFacade"
+                "Letterxpress": "Ben182\\Letterxpress\\LetterxpressFacade"
             }
         }
     }

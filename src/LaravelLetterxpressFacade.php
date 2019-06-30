@@ -1,13 +1,13 @@
 <?php
 
-namespace Ben182\LaravelLetterxpress;
+namespace Ben182\Letterxpress;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Ben182\LaravelLetterxpress\Skeleton\SkeletonClass
+ * @see \Ben182\Letterxpress\Skeleton\SkeletonClass
  */
-class LaravelLetterxpressFacade extends Facade
+class LetterxpressFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +16,6 @@ class LaravelLetterxpressFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-letterxpress';
+        return 'letterxpress';
     }
 }

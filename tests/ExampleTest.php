@@ -1,6 +1,6 @@
 <?php
 
-namespace Ben182\LaravelLetterxpress\Tests;
+namespace Ben182\Letterxpress\Tests;
 
 use PHPUnit\Framework\TestCase;
 
