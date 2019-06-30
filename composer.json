@@ -1,0 +1,54 @@
+{
+    "name": "ben182/laravel-letterxpress",
+    "description": "LetterXpress API for Laravel",
+    "keywords": [
+        "ben182",
+        "laravel-letterxpress"
+    ],
+    "homepage": "https://github.com/ben182/laravel-letterxpress",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Benjamin Bortels",
+            "email": "moin@benjaminbortels.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.8.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ben182\\LaravelLetterxpress\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ben182\\LaravelLetterxpress\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ben182\\LaravelLetterxpress\\LaravelLetterxpressServiceProvider"
+            ],
+            "aliases": {
+                "LaravelLetterxpress": "Ben182\\LaravelLetterxpress\\LaravelLetterxpressFacade"
+            }
+        }
+    }
+}
