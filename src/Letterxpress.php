@@ -15,13 +15,6 @@ class Letterxpress
     protected $sandboxUrl = 'https://sandbox.letterxpress.de/v1/';
 
     /**
-     * The API Url to use.
-     *
-     * @var string
-     */
-    protected $baseUrl;
-
-    /**
      * The Guzzle Client.
      *
      * @var \GuzzleHttp\Client
@@ -30,10 +23,10 @@ class Letterxpress
 
     public function __construct()
     {
-        $this->baseUrl = config('letterxpress.use_sandbox') ? $this->sandboxUrl : $this->liveUrl;
+        $baseUrl = config('letterxpress.use_sandbox') ? $this->sandboxUrl : $this->liveUrl;
 
         $this->client = new Client([
-            'base_uri' => $this->baseUrl,
+            'base_uri' => $baseUrl,
             'timeout'  => 5.0,
             'headers'  => [
                 'Content-Type' => 'application/json',
@@ -94,6 +87,11 @@ class Letterxpress
         return $this->transformJobs($response->job);
     }
 
+    public function deleteJob(int $jobId)
+    {
+        return $this->request('delete', 'deleteJob/' . $jobId);
+    }
+
     public function getQueuedJobs($sinceDays = 0)
     {
         $response = $this->request('get', 'getJobs/queue/' . $sinceDays);
@@ -135,7 +133,6 @@ class Letterxpress
         if (isset($job->price)) {
             $job->price = floatval($job->price);
         }
-
 
         return $job;
     }
