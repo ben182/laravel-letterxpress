@@ -84,7 +84,23 @@ class Letterxpress
     {
         $response = $this->request('get', 'getJob/' . $jobId);
 
-        return $this->transformJobs($response->job);
+        return $this->castJob($response->job);
+    }
+
+    public function listInvoices()
+    {
+        return $this->request('get', 'listInvoices');
+
+        return $this->castJob($response->job);
+    }
+
+    public function getBalance()
+    {
+        $response       = $this->request('get', 'getBalance');
+        $balance        = $response->balance;
+        $balance->value = floatval($balance->value);
+
+        return $balance;
     }
 
     public function deleteJob(int $jobId)
@@ -92,12 +108,12 @@ class Letterxpress
         return $this->request('delete', 'deleteJob/' . $jobId);
     }
 
-    public function getQueuedJobs($sinceDays = 0)
+    public function getQueuedJobs(int $sinceDays = 0)
     {
         $response = $this->request('get', 'getJobs/queue/' . $sinceDays);
 
         return (new Collection($response->jobs))->map(function ($job) {
-            return $this->transformJobs($job);
+            return $this->castJob($job);
         });
     }
 
@@ -106,7 +122,16 @@ class Letterxpress
         $response = $this->request('get', 'getJobs/timer');
 
         return (new Collection($response->jobs))->map(function ($job) {
-            return $this->transformJobs($job);
+            return $this->castJob($job);
+        });
+    }
+
+    public function getSentJobs(int $sinceDays = 0)
+    {
+        $response = $this->request('get', 'getJobs/sent/' . $sinceDays);
+
+        return (new Collection($response->jobs))->map(function ($job) {
+            return $this->castJob($job);
         });
     }
 
@@ -115,7 +140,7 @@ class Letterxpress
         return $this->getQueuedJobs()->merge($this->getTimedJobs());
     }
 
-    protected function transformJobs($job)
+    protected function castJob($job)
     {
         $job->date         = is_null($job->date) ? null : new Carbon($job->date);
         $job->dispatchdate = is_null($job->dispatchdate) ? null : new Carbon($job->dispatchdate);
