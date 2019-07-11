@@ -8,6 +8,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Collection;
 use function GuzzleHttp\json_decode;
+use Ben182\Letterxpress\Exceptions\RequestNotSuccessful;
+use Ben182\Letterxpress\Exceptions\RequestNotSuccessfulException;
 
 class Letterxpress
 {
@@ -177,7 +179,7 @@ class Letterxpress
 
         $response =  json_decode((string) $response->getBody());
 
-        throw_if($response->status !== 200, new Exception('LetterXpress Request was not successful'));
+        throw_if($response->status !== 200, new RequestNotSuccessfulException((string) $response->getBody(), $response->getStatusCode()));
 
         return $response;
     }
