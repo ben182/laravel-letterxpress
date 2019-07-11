@@ -177,8 +177,10 @@ class Letterxpress
             RequestOptions::JSON => $options,
         ]);
 
-        throw_if($response->status !== 200, new RequestNotSuccessfulException((string) $response->getBody(), $response->getStatusCode()));
+        $responseBody = json_decode((string) $response->getBody());
 
-        return json_decode((string) $response->getBody());
+        throw_if($response->getStatusCode() !== 200, new RequestNotSuccessfulException((string) $response->getBody(), $response->getStatusCode()));
+
+        return $responseBody;
     }
 }
