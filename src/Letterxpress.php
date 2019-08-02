@@ -7,8 +7,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Collection;
 use function GuzzleHttp\json_decode;
-use Ben182\Letterxpress\Exceptions\RequestNotSuccessfulException;
 use Ben182\Letterxpress\Exceptions\FilesizeIsTooLarge;
+use Ben182\Letterxpress\Exceptions\RequestNotSuccessfulException;
 
 class Letterxpress
 {
@@ -65,7 +65,8 @@ class Letterxpress
         ]);
     }
 
-    protected function isPdfSizeAllowed($file) {
+    protected function isPdfSizeAllowed($file)
+    {
         return round(filesize($file) / 1024 / 1024) <= static::MAX_PDF_FILESIZE;
     }
 
