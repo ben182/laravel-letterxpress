@@ -13,6 +13,6 @@ class RequestNotSuccessfulException extends Exception
     {
         $this->body = $body;
         $this->statusCode = $statusCode;
-        parent::__construct('LetterXpress Request was not successful. Response: ' . $this->body);
+        parent::__construct('LetterXpress Request was not successful. Response: '.$this->body);
     }
 }
