@@ -98,8 +98,6 @@ class Letterxpress
     public function listInvoices()
     {
         return $this->request('get', 'listInvoices');
-
-        return $this->castJob($response->job);
     }
 
     public function getBalance()
