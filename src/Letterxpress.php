@@ -2,18 +2,16 @@
 
 namespace Ben182\Letterxpress;
 
-use Exception;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Collection;
 use function GuzzleHttp\json_decode;
-use Ben182\Letterxpress\Exceptions\RequestNotSuccessful;
 use Ben182\Letterxpress\Exceptions\RequestNotSuccessfulException;
 
 class Letterxpress
 {
-    protected $liveUrl    = 'https://api.letterxpress.de/v1/';
+    protected $liveUrl = 'https://api.letterxpress.de/v1/';
     protected $sandboxUrl = 'https://sandbox.letterxpress.de/v1/';
 
     /**
@@ -39,7 +37,7 @@ class Letterxpress
     public function createJob($pdfPath, Carbon $dispatchDate = null, string $address = null, bool $printInColor = false, bool $doubleSidedPrinting = false, bool $internationalShipping = false, bool $c4MailingBag = false)
     {
         $base64file = base64_encode(file_get_contents($pdfPath));
-        $checksum   = md5($base64file);
+        $checksum = md5($base64file);
 
         $payload = [
             'base64_file'     => $base64file,
@@ -84,7 +82,7 @@ class Letterxpress
 
     public function getJob(int $jobId)
     {
-        $response = $this->request('get', 'getJob/' . $jobId);
+        $response = $this->request('get', 'getJob/'.$jobId);
 
         return $this->castJob($response->job);
     }
@@ -98,8 +96,8 @@ class Letterxpress
 
     public function getBalance()
     {
-        $response       = $this->request('get', 'getBalance');
-        $balance        = $response->balance;
+        $response = $this->request('get', 'getBalance');
+        $balance = $response->balance;
         $balance->value = floatval($balance->value);
 
         return $balance;
@@ -107,12 +105,12 @@ class Letterxpress
 
     public function deleteJob(int $jobId)
     {
-        return $this->request('delete', 'deleteJob/' . $jobId);
+        return $this->request('delete', 'deleteJob/'.$jobId);
     }
 
     public function getQueuedJobs(int $sinceDays = 0)
     {
-        $response = $this->request('get', 'getJobs/queue/' . $sinceDays);
+        $response = $this->request('get', 'getJobs/queue/'.$sinceDays);
 
         return (new Collection($response->jobs))->map(function ($job) {
             return $this->castJob($job);
@@ -130,7 +128,7 @@ class Letterxpress
 
     public function getSentJobs(int $sinceDays = 0)
     {
-        $response = $this->request('get', 'getJobs/sent/' . $sinceDays);
+        $response = $this->request('get', 'getJobs/sent/'.$sinceDays);
 
         return (new Collection($response->jobs))->map(function ($job) {
             return $this->castJob($job);
@@ -144,16 +142,16 @@ class Letterxpress
 
     protected function castJob($job)
     {
-        $job->date         = is_null($job->date) ? null : new Carbon($job->date);
+        $job->date = is_null($job->date) ? null : new Carbon($job->date);
         $job->dispatchdate = is_null($job->dispatchdate) ? null : new Carbon($job->dispatchdate);
-        $job->sentdate     = is_null($job->sentdate) ? null : new Carbon($job->sentdate);
+        $job->sentdate = is_null($job->sentdate) ? null : new Carbon($job->sentdate);
 
-        $job->jid   = intval($job->jid);
+        $job->jid = intval($job->jid);
         $job->pages = intval($job->pages);
         $job->color = intval($job->color);
 
         if (isset($job->cost)) {
-            $job->cost     = floatval($job->cost);
+            $job->cost = floatval($job->cost);
             $job->cost_vat = floatval($job->cost_vat);
         }
 
@@ -173,7 +171,7 @@ class Letterxpress
             ],
         ]);
 
-        $response =  $this->client->request($method, $path, [
+        $response = $this->client->request($method, $path, [
             RequestOptions::JSON => $options,
         ]);
 
