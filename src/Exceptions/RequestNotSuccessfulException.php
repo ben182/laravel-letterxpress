@@ -2,7 +2,6 @@
 
 namespace Ben182\Letterxpress\Exceptions;
 
-use Illuminate\Support\Facades\Facade;
 use Exception;
 
 /**

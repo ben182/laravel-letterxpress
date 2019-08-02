@@ -4,7 +4,7 @@ namespace Ben182\Letterxpress;
 
 use Illuminate\Support\ServiceProvider;
 
-class LetterxpressServiceProvider extends ServiceProvider
+class LaravelLetterxpressServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.

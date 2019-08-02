@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Ben182\Letterxpress\Skeleton\SkeletonClass
  */
-class LetterxpressFacade extends Facade
+class LaravelLetterxpressFacade extends Facade
 {
     /**
      * Get the registered name of the component.
