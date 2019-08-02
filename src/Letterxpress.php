@@ -8,11 +8,13 @@ use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Collection;
 use function GuzzleHttp\json_decode;
 use Ben182\Letterxpress\Exceptions\RequestNotSuccessfulException;
+use Ben182\Letterxpress\Exceptions\FilesizeIsTooLarge;
 
 class Letterxpress
 {
     protected $liveUrl = 'https://api.letterxpress.de/v1/';
     protected $sandboxUrl = 'https://sandbox.letterxpress.de/v1/';
+    const MAX_PDF_FILESIZE = 15; // MB
 
     /**
      * The Guzzle Client.
@@ -36,6 +38,8 @@ class Letterxpress
 
     public function createJob($pdfPath, Carbon $dispatchDate = null, string $address = null, bool $printInColor = false, bool $doubleSidedPrinting = false, bool $internationalShipping = false, bool $c4MailingBag = false)
     {
+        throw_unless($this->isPdfSizeAllowed($pdfPath), new FilesizeIsTooLarge($pdfPath));
+
         $base64file = base64_encode(file_get_contents($pdfPath));
         $checksum = md5($base64file);
 
@@ -59,6 +63,10 @@ class Letterxpress
         return $this->request('post', 'setJob', [
             'letter' => $payload,
         ]);
+    }
+
+    protected function isPdfSizeAllowed($file) {
+        return round(filesize($file) / 1024 / 1024) <= static::MAX_PDF_FILESIZE;
     }
 
     public function getPrice(int $pages, bool $printInColor = false, bool $doubleSidedPrinting = false, bool $internationalShipping = false, bool $c4MailingBag = false)

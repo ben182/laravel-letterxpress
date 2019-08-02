@@ -4,9 +4,6 @@ namespace Ben182\Letterxpress\Exceptions;
 
 use Exception;
 
-/**
- * @see \Ben182\Letterxpress\Skeleton\SkeletonClass
- */
 class RequestNotSuccessfulException extends Exception
 {
     public $body;
@@ -16,6 +13,6 @@ class RequestNotSuccessfulException extends Exception
     {
         $this->body = $body;
         $this->statusCode = $statusCode;
-        parent::__construct('LetterXpress Request was not successful');
+        parent::__construct('LetterXpress Request was not successful. Response: ' . $this->body);
     }
 }
